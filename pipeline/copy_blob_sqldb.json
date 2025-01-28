@@ -71,7 +71,7 @@
 				}
 			},
 			{
-				"name": "Wait_2",
+				"name": "Wait_1",
 				"type": "Wait",
 				"dependsOn": [
 					{
@@ -85,7 +85,6 @@
 				"typeProperties": {
 					"waitTimeInSeconds": 1
 				}
-			}
 		],
 		"annotations": [],
 		"lastPublishTime": "2025-01-23T12:40:51Z"
