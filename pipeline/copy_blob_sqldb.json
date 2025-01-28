@@ -55,7 +55,7 @@
 				]
 			},
 			{
-				"name": "Wait1",
+				"name": "new2_Wait1",
 				"type": "Wait",
 				"dependsOn": [
 					{
