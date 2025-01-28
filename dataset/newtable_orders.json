@@ -1,0 +1,17 @@
+{
+	"name": "newtable_orders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedServiceSQLDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "ordertablecoppied"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
