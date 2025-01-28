@@ -85,6 +85,7 @@
 				"typeProperties": {
 					"waitTimeInSeconds": 1
 				}
+			}
 		],
 		"annotations": [],
 		"lastPublishTime": "2025-01-23T12:40:51Z"
