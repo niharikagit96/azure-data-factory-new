@@ -57,7 +57,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"dataset_table_name": {
-								"value": "@pipeline().parameters.table_name",
+								"value": "@concat(replace(replace(replace(pipeline().parameters.table_name, '[', ''), ']', ''), '.', '_'), '.csv')\n\n",
 								"type": "Expression"
 							}
 						}

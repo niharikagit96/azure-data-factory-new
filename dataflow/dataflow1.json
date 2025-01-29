@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "AzureblobToStore",
+						"referenceName": "azureBlob_table",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
