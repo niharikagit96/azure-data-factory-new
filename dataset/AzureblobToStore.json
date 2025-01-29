@@ -1,0 +1,31 @@
+{
+	"name": "AzureblobToStore",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedServiceAzureBlob",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"dataset_table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@{dataset().dataset_table_name}",
+					"type": "Expression"
+				},
+				"container": "nihasgen2lake"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
