@@ -3,67 +3,100 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopySalesSqlBlob",
-				"type": "Copy",
+				"name": "ForEachcopy",
+				"type": "ForEach",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"items": {
+						"value": "@pipeline().parameters.date_values",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+					"activities": [
+						{
+							"name": "CopySalesSqlBlob",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "SalesLT.SalesOrderHeader"
+								},
+								{
+									"name": "Destination",
+									"value": "nihasgen2lake/landing/sales/@{concat(\n    replace(\n        replace(\n            replace(pipeline().parameters.sales_table_name_pl, '[', ''),\n            ']', ''\n        ),\n        '.', '_'\n    ),\n    item(),\n    '.csv'\n)\n}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_salesTable",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_salescsv",
+									"type": "DatasetReference",
+									"parameters": {
+										"sales_table_name": {
+											"value": "@concat(\n    replace(\n        replace(\n            replace(pipeline().parameters.sales_table_name_pl, '[', ''),\n            ']', ''\n        ),\n        '.', '_'\n    ),\n    item(),\n    '.csv'\n)\n",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_salesTable",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_salescsv",
-						"type": "DatasetReference",
-						"parameters": {
-							"sales_table_name": {
-								"value": "@pipeline().parameters.sales_table_name_pl",
-								"type": "Expression"
-							}
-						}
-					}
-				]
+					]
+				}
 			}
 		],
 		"parameters": {
 			"sales_table_name_pl": {
 				"type": "string"
+			},
+			"date_values": {
+				"type": "array",
+				"defaultValue": [
+					"20250125",
+					"20250126",
+					"20250127",
+					"20250128",
+					"20250129"
+				]
 			}
 		},
 		"annotations": []
