@@ -19,9 +19,9 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "dates_list",
+								"variableName": "date_list",
 								"value": {
-									"value": "@formatDateTime(\r\n    addDays(utcNow(),item())\r\n    )",
+									"value": "@formatDateTime(\n    addDays(utcNow(),item()),\n    'yyyyMMdd'\n    )",
 									"type": "Expression"
 								}
 							}
@@ -30,6 +30,17 @@
 				}
 			}
 		],
+		"variables": {
+			"date_list": {
+				"type": "Array"
+			},
+			"final_array": {
+				"type": "Array"
+			},
+			"dates_array": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }

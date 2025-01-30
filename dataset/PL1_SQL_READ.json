@@ -1,0 +1,12 @@
+{
+	"name": "PL1_SQL_READ",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedServiceSQLDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

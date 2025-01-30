@@ -1,0 +1,56 @@
+{
+	"name": "PL1_DATES_ARRAY_COPYSQL_BLOB",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "PL1_SQL_READ",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Set_date_list",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "date_list",
+					"value": [
+						""
+					]
+				}
+			}
+		],
+		"variables": {
+			"date_list": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	}
+}
