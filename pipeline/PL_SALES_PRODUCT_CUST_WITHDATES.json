@@ -1,0 +1,110 @@
+{
+	"name": "PL_SALES_PRODUCT_CUST_WITHDATES",
+	"properties": {
+		"activities": [
+			{
+				"name": "loop_table_names",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('table_list')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Switch_tables",
+							"type": "Switch",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@item()",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "sales",
+										"activities": [
+											{
+												"name": "Wait_sales",
+												"type": "Wait",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"waitTimeInSeconds": 1
+												}
+											}
+										]
+									},
+									{
+										"value": "product",
+										"activities": [
+											{
+												"name": "Wait_product",
+												"type": "Wait",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"waitTimeInSeconds": 1
+												}
+											}
+										]
+									},
+									{
+										"value": "customer",
+										"activities": [
+											{
+												"name": "Wait_customer",
+												"type": "Wait",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"waitTimeInSeconds": 1
+												}
+											}
+										]
+									}
+								],
+								"defaultActivities": [
+									{
+										"name": "Wait_default",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 1
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"sales_file_name": {
+				"type": "string"
+			},
+			"product_file_name": {
+				"type": "string"
+			},
+			"customer_file_name": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"table_list": {
+				"type": "Array",
+				"defaultValue": [
+					"sales",
+					"product",
+					"customer"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
