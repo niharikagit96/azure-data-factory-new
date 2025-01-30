@@ -1,0 +1,35 @@
+{
+	"name": "PL_1GET_DATES_ARRAY",
+	"properties": {
+		"activities": [
+			{
+				"name": "loop through_dates",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@range(0,10)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Append_dates",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "dates_list",
+								"value": {
+									"value": "@formatDateTime(\r\n    addDays(utcNow(),item())\r\n    )",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": []
+	}
+}
