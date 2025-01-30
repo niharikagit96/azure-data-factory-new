@@ -1,11 +1,18 @@
 {
-	"name": "PL_SALES_PRODUCT_CUST_WITHDATES",
+	"name": "PL_1SALES_PRODUCT_CUST_WITHDATES",
 	"properties": {
 		"activities": [
 			{
 				"name": "loop_table_names",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "loop through_dates",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -35,6 +42,25 @@
 												"typeProperties": {
 													"waitTimeInSeconds": 1
 												}
+											},
+											{
+												"name": "Execute Pipeline1",
+												"type": "ExecutePipeline",
+												"dependsOn": [
+													{
+														"activity": "Wait_sales",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"waitOnCompletion": true
+												}
 											}
 										]
 									},
@@ -49,6 +75,25 @@
 												"typeProperties": {
 													"waitTimeInSeconds": 1
 												}
+											},
+											{
+												"name": "Execute Pipeline2",
+												"type": "ExecutePipeline",
+												"dependsOn": [
+													{
+														"activity": "Wait_product",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"waitOnCompletion": true
+												}
 											}
 										]
 									},
@@ -62,6 +107,25 @@
 												"userProperties": [],
 												"typeProperties": {
 													"waitTimeInSeconds": 1
+												}
+											},
+											{
+												"name": "Execute Pipeline3",
+												"type": "ExecutePipeline",
+												"dependsOn": [
+													{
+														"activity": "Wait_customer",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"waitOnCompletion": true
 												}
 											}
 										]
@@ -78,6 +142,33 @@
 										}
 									}
 								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "loop through_dates",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@range(0,10)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Append_dates",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "dates_list",
+								"value": {
+									"value": "@formatDateTime(\r\n    addDays(utcNow(),item())\r\n    )",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -103,6 +194,9 @@
 					"product",
 					"customer"
 				]
+			},
+			"dates_list": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
