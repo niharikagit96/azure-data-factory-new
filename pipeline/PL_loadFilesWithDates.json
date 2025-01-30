@@ -109,7 +109,7 @@
 							"typeProperties": {
 								"variableName": "date_values_list",
 								"value": {
-									"value": "@formatDateTime(adddays(utcNow(),1),'yyyyMMdd')",
+									"value": "@formatDateTime(adddays(utcNow(),item()),'yyyyMMdd')",
 									"type": "Expression"
 								}
 							}
